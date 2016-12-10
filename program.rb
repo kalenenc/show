@@ -2,8 +2,11 @@ require './lib/my_class'
 
 class Seating
 
+	# def initialize
+	# 	@chart = []
 
 
+	# end
 
 	def build rows, cols, reserved
 		#this part builds the seating chart
@@ -11,12 +14,16 @@ class Seating
 		#c_num = 1
 		col_array = []
 		row_array = []
+		@rows = rows
+		@cols = cols
+		@reserved = reserved
 	
-		chart = Array.new(rows)  {Array.new(cols){"S"}}
-		puts "this is chart #{chart}"
+		@chart = Array.new(@rows)  {Array.new(@cols){"S"}}
+
+
 		
 		#this all works!
-		reserved.each do |x|
+		@reserved.each do |x|
 			c_split = x.split("C") #this would return ["R1", "5"] 
 			both_split = c_split[0].split("R") #this would then bring back an array of ["", "1"]
 
@@ -35,15 +42,13 @@ class Seating
 		col_array.map {|x| x.to_i}
 		#convert row_array and row_array to ints
 		row_array.map {|x| x.to_i}
-		
 
-		
 		#-----------------------------------------------
 		index_col_array = []
 		index_row_array = []
 
-		(0...rows).each do |r|
-		    (0...cols).each do |c|
+		(0...@rows).each do |r|
+		    (0...@cols).each do |c|
 		    	index_col_array.push(c)
 		    	index_row_array.push(r)
 		    end
@@ -53,89 +58,73 @@ class Seating
 		#=> [[1,4],[1,6],[2,3],[2,7],[3,9],[3,10]]
 		index_combine_array = index_row_array.zip index_col_array
 
-		puts "combine array #{combine_array}"
-
-		# (index_combine_array.length).times do |i|
-		# 	(combine_array.length).times do |c|
-		# 		# puts "this is the index combine array: #{i}" 
-		# 		# puts "this is the combined array: #{c}" 
-		# 		if index_combine_array[i] == combine_array[c]
-		# 			puts "equal! #{index_combine_array[i]} #{combine_array[c]}"
-		# 			puts "this is i #{i}"
-		# 			puts "this is c #{c}"
-		# 			puts "this is chart[i][c] #{chart[i][c]}"
-		# 			# equal_array.push(c)
-		# 			#puts "chart[i][c] is #{chart[i][c]}"
-		# 			chart[i][c] = "X"
-		# 			#puts "this is the chart position that should be x #{chart[c][i]}"
-			
-		# 		end
-				
-		# 	end
-			
-		# end
-	
-		
-
-		
-
-
 		# --------------Print Chart------------------
-
 		
-		(0...rows).each do |r|
-		    (0...cols).each do |c|
+
+
+		(0...@rows).each do |r|
+		    (0...@cols).each do |c|
 		    	
 		    	combine_array.each do |x|
 		    		if x[0] == r && x[1] == c
-		    			chart[r][c] = "X"
+		    			@chart[r][c] = "X"
 		    		end
 		    	end
-		    
-		    
-		    	print chart[r][c]
-		    
+		    	print @chart[r][c]
 		    end
-		  
-		    puts 
+		     puts
+		end
+		
+
+	end
+
+	def reserve 
+
+		map = @chart
+
+		xmid = ((0 - (@rows -1 )) / 2).abs
+		ymid = ((0 - (@rows + 1 )) / 2).abs
+
+		midpoint = map[xmid][ymid]
+
+		(0...@rows).each do |r|
+		    (0...@cols).each do |c|
+
+		    	#probably try to do the majority of stuff while in this loop here
+
+		    		#figure out the midpoint of a 2D array (or maybe just a reg array to start)
+
+		    		#figure out the closes distance to the midpoint
+		    		#on that midpoint, distribute seats equally along the midpoint of the number of 
+		    		# seats that they want
+		    		#if there is NOT an "X" already filled in the closest area from the middle
+		    			#update the array where they want to sit with an "X"
+		    		#if there is an "X" already filled in the closest area from the middle
+		    			#say, sorry, your request can't be submitted at this time
+		    		#print back the array again
+		    		
+
+
+		    	#this should be the last step and probably in an if statement, if else, skip it
+		    	print map[r][c]
+		    end
+		    puts
 		end
 
 
+
+
+	# 	#Find the best available seats
+	# 	#Mark those seats as reserved in the seating map
+	# 	#Print the start and end seats that were just reserved (e.g. reserve(map, 3) could print "R1C4-R1C6")
+	# 	#Return map with these seated now reserved
+	# 	#If its not possible to fulfill a request, print "Not Available" and return the map as is
+
 	end
+
 end
 
 seat = Seating.new
 seat.build 3, 11, ["R1C4","R1C6","R2C3","R2C7","R3C9","R3C10"]
+# seat.reserve
 
-
-# chart = Array.new(3)  {Array.new(11){"O"}}
-
-
-
-# def make_grid chart
-# 	(0..2).each do |i|
-# 	    (0..10).each do |j|
-# 	        print chart[i][j]
-# 	    end
-# 	    puts
-# 	end
-# end
-
-# while true
-# 	answer_array = []
-# 	puts "Please choose the seat you would like to reserve, separated by a comma"
-# 	#get user input
-# 	answer = gets.chomp.split(",").map(&:to_i)
-
-# 	row = answer[0]
-# 	col = answer[1]
-
-# 	if chart[row][col] == "O"
-# 		chart[row][col] = "X"
-# 		puts "cool, you changed the seat!"
-# 		make_grid chart
-
-# 	else
-# 		puts "That seat is already taken"
-# 	end
-# end
