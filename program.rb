@@ -1,4 +1,4 @@
-#I unfortunately was not able to finish this challenge. I was able to finish the first function, build,
+#I unfortunately was not able to finish this challenge in time. I was able to finish the first function, build,
 #but could not finish the reserve function. I have detailed my notes the best I could. I know my
 #code isn't the cleanest right now, but I sadly didn't have time to refactor the way I wanted to, as I was
 #too fucused of figuring out finishing the reserve function.
